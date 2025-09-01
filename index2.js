@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
       const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
       if (base64Data) {
-        const imageUrl = `data:image/png;base64,${base64Data}`;
+        const imageUrl = `https//:image/png;base64,${base64Data}`;
         generatedImage.src = imageUrl;
         generatedImage.classList.remove("hidden");
         imagePlaceholder.classList.add("hidden");
