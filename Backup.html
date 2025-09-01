@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>INNOV.AI</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+            rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- <link rel="stylesheet" href="style.css"> -->
+        <style>
+            :root {
+  --bg-color: #0f172a;
+  --main-bg-gradient-start: #1e293b;
+  --main-bg-gradient-end: #0f172a;
+  --card-bg-color: #1e293b;
+  --accent-1: #06b6d4;
+  --accent-2: #38bdf8;
+  --text-color: #e2e8f0;
+  --secondary-text-color: #94a3b8;
+  --input-bg-color: #0f172a;
+  --input-border-color: #475569;
+  --button-color: #9333ea; /* A vibrant purple for the chatbot and theme buttons */
+  --button-hover: #a855f7;
+  --glow-color: #38bdf8;
+  --glow-color-light: #52a7ec;
+  transition: all 0.5s ease-in-out;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: linear-gradient(
+    135deg,
+    var(--main-bg-gradient-start),
+    var(--main-bg-gradient-end),
+    var(--main-bg-gradient-start)
+  );
+  background-size: 400% 400%;
+  animation: gradient-animation 6s ease infinite;
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.floating-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -9;
+}
+
+.shape {
+  position: absolute;
+  background-color: rgba(var(--accent-1-rgb), 0.15);
+  animation: float 12s ease-in-out infinite;
+  border: 1px solid rgba(var(--accent-2-rgb), 0.3);
+  backdrop-filter: blur(5px);
+  opacity: 0.8;
+  transition: all 0.5s ease;
+}
+
+.shape:nth-child(1) {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: 20%;
+  animation-duration: 15s;
+  background-color: rgba(var(--accent-1-rgb), 0.15);
+  clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+.shape:nth-child(2) {
+  width: 100px;
+  height: 100px;
+  top: 50%;
+  left: 70%;
+  animation-duration: 11s;
+  background-color: rgba(var(--accent-2-rgb), 0.1);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+.shape:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  top: 80%;
+  left: 40%;
+  animation-duration: 13s;
+  background-color: rgba(var(--accent-1-rgb), 0.1);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+.shape:nth-child(4) {
+  width: 120px;
+  height: 120px;
+  top: 30%;
+  left: 85%;
+  animation-duration: 16s;
+  background-color: rgba(var(--accent-2-rgb), 0.15);
+  clip-path: circle(50% at 50% 50%);
+}
+.shape:nth-child(5) {
+  width: 90px;
+  height: 90px;
+  top: 65%;
+  left: 15%;
+  animation-duration: 14s;
+  background-color: rgba(var(--accent-1-rgb), 0.1);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%, 0 25%);
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) translateX(20px) rotate(15deg);
+  }
+}
+
+.founder-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  border-radius: 15px;
+}
+.founder-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 0 20px rgba(var(--accent-2-rgb), 0.8),
+    0 0 10px rgba(var(--accent-1-rgb), 0.6) inset;
+}
+
+.founder-initial-shape {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--bg-color);
+  position: relative;
+}
+
+.response-container {
+  line-height: 1.6;
+  min-height: 200px;
+  overflow-y: auto;
+  max-height: 400px;
+  scroll-behavior: smooth;
+}
+.response-container h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-1);
+}
+.response-container ul,
+.response-container ol {
+  margin-left: 2rem;
+  list-style: none;
+}
+.response-container li {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+.response-container li::before {
+  content: "•";
+  color: var(--accent-2);
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+.response-container h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-1);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gradient-button {
+  background-image: linear-gradient(to right, var(--accent-1), var(--accent-2));
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gradient-button:hover {
+  background-image: linear-gradient(to right, var(--accent-2), var(--accent-1));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(var(--accent-1-rgb), 0.4);
+}
+
+.card-bg {
+  background-color: var(--card-bg-color);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(var(--accent-2-rgb), 0.15) inset;
+  border: 1px solid rgba(var(--accent-2-rgb), 0.5);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.input-bg {
+  background-color: var(--input-bg-color);
+  transition: background-color 0.5s ease-in-out;
+}
+.input-focus:focus {
+  outline: none;
+  border-color: var(--accent-1);
+  box-shadow: 0 0 0 3px rgba(var(--accent-1-rgb), 0.3);
+}
+
+.main-card-glow {
+  box-shadow: 0 0 25px rgba(var(--glow-color-rgb), 0.7),
+    0 0 50px rgba(var(--glow-color-rgb), 0.4),
+    0 0 80px rgba(var(--glow-color-rgb), 0.2);
+  animation: glow-pulse 3s infinite ease-in-out;
+}
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 25px rgba(var(--glow-color-rgb), 0.7),
+      0 0 50px rgba(var(--glow-color-rgb), 0.4),
+      0 0 80px rgba(var(--glow-color-rgb), 0.2);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(var(--glow-color-rgb), 0.9),
+      0 0 60px rgba(var(--glow-color-rgb), 0.6),
+      0 0 90px rgba(var(--glow-color-rgb), 0.3);
+  }
+}
+
+.parallax-bg {
+  transition: transform 0.5s ease-out;
+}
+
+/* Navbar Styles */
+.navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+  font-weight: 600; /* Bolder as requested */
+  color: var(--accent-2); /* More vibrant color */
+  padding-bottom: 4px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-1);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile Menu Styles */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    15,
+    23,
+    42,
+    0.6
+  ); /* Reduced opacity for better blur effect */
+  backdrop-filter: blur(15px); /* Increased blur for better effect */
+  -webkit-backdrop-filter: blur(15px); /* Safari support */
+  z-index: 110; /* Above backdrop-overlay to prevent blurring */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  padding-top: 4rem; /* Added padding to avoid overlap with navbar toggle */
+}
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-nav-link {
+  font-size: 1.75rem; /* Slightly smaller for better fit */
+  font-weight: 700;
+  margin: 1.25rem 0; /* Increased vertical spacing */
+  color: var(--accent-2);
+  transition: color 0.2s;
+  text-align: center; /* Center align text */
+  width: 100%; /* Full width for easier tapping */
+  max-width: 300px; /* Limit max width */
+  padding: 0.5rem 1rem; /* Padding for better tap area */
+  border-radius: 0.75rem; /* Rounded corners for buttons */
+  box-sizing: border-box;
+  z-index: 111; /* Above backdrop-overlay */
+}
+.mobile-nav-link:hover {
+  color: var(--accent-1);
+  background-color: rgba(
+    var(--accent-1-rgb),
+    0.1
+  ); /* subtle background on hover */
+}
+
+#menu-toggle {
+  display: none; /* Hidden on large screens */
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 12;
+  background-color: var(--button-color);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#menu-toggle:hover {
+  background-color: var(--button-hover);
+}
+
+@media (max-width: 640px) {
+  #menu-toggle {
+    display: block;
+  }
+  .nav-links-desktop {
+    display: none;
+  }
+}
+
+/* Chatbot specific styles */
+.chat-popup {
+  position: fixed;
+  bottom: 6rem;
+  right: 2rem;
+  width: 350px;
+  height: 500px;
+  background-color: var(--card-bg-color);
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: scale(0);
+  transform-origin: bottom right;
+  opacity: 0;
+  z-index: 101;
+}
+.chat-popup.open {
+  transform: scale(1);
+  opacity: 1;
+}
+.chat-header {
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chat-body {
+  flex-grow: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.message {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+}
+.user-message {
+  background-color: var(--accent-1);
+  align-self: flex-end;
+  border-radius: 10px;
+  color: white;
+  padding: 5px 10px;
+}
+.bot-message {
+  background-color: var(--accent-2);
+  align-self: flex-start;
+  border-bottom-left-radius: 0.25rem;
+  color: white;
+}
+.chat-footer {
+  display: flex;
+  padding: 1rem;
+  gap: 0.5rem;
+}
+.chat-footer input {
+  flex-grow: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+}
+.chat-footer button {
+  background-color: var(--accent-1);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.chat-footer button:hover {
+  background-color: var(--accent-2);
+}
+
+#chat-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--button-color);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 102;
+  transition: background-color 0.5s ease-in-out;
+}
+#chat-toggle:hover {
+  background-color: var(--button-hover);
+}
+
+.backdrop-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 90; /* Lowered z-index to be below mobile menu */
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.backdrop-overlay.open {
+  display: block;
+  opacity: 1;
+}
+
+#theme-toggle {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  background-color: var(--button-color);
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 102;
+  transition: background-color 0.5s ease-in-out;
+}
+#theme-toggle:hover {
+  background-color: var(--button-hover);
+}
+
+         </style>
+    </head>
+    <body>
+        <!-- Animated Background -->
+        <div class="animated-bg"></div>
+        <div class="floating-shapes">
+            <div class="shape parallax-bg" data-depth="0.2"></div>
+            <div class="shape parallax-bg" data-depth="0.5"></div>
+            <div class="shape parallax-bg" data-depth="0.3"></div>
+            <div class="shape parallax-bg" data-depth="0.6"></div>
+            <div class="shape parallax-bg" data-depth="0.4"></div>
+        </div>
+
+        <!-- Theme Change Button -->
+        <button id="theme-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-droplet text-white">
+                <path
+                    d="M12.68 18.66a2 2 0 01-3.36 0L4 12.55V8a8 8 0 018-8v0a8 8 0 018 8v4.55L12.68 18.66z"></path>
+            </svg>
+        </button>
+
+        <!-- Main Container -->
+        <div class="relative z-10 min-h-screen flex flex-col items-center">
+            <!-- Header -->
+            <header class="navbar-fixed">
+                <nav
+                    class="w-full max-w-7xl mx-auto flex items-center justify-between py-4 px-6 relative">
+                    <div
+                        class="text-3xl font-bold tracking-tight text-white z-50">INNOV.<span
+                            class="text-[var(--accent-1)]">AI</span></div>
+
+                    <!-- Desktop Nav Links -->
+                    <div
+                        class="nav-links-desktop hidden sm:block space-x-4 sm:space-x-8 text-sm">
+                        <a href="#home" class="nav-link">Home</a>
+                        <a href="#about" class="nav-link">About</a>
+                        <a href="#explore" class="nav-link">Explore</a>
+                        <a href="#founders" class="nav-link">Founders</a>
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </div>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button id="menu-toggle" class="sm:hidden text-white z-50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8"
+                            fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </nav>
+                <!-- Mobile Menu Overlay -->
+                <div id="mobile-menu" class="mobile-menu sm:hidden">
+                    <a href="#home" class="mobile-nav-link">Home</a>
+                    <a href="#about" class="mobile-nav-link">About</a>
+                    <a href="#explore" class="mobile-nav-link">Explore</a>
+                    <a href="#founders" class="mobile-nav-link">Founders</a>
+                    <a href="#contact" class="mobile-nav-link">Contact</a>
+                </div>
+            </header>
+            <!-- Main Content Section -->
+            <main
+                class="w-full max-w-7xl flex-grow flex flex-col items-center justify-center p-6 mt-20">
+                <section id="home" class="text-center py-24 fade-in">
+                    <h1
+                        class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 text-white">
+                        Innovate. Solve. <span
+                            class="text-[var(--accent-1)]">Thrive.</span>
+                    </h1>
+                    <p
+                        class="text-lg md:text-xl max-w-3xl mx-auto mb-12 text-gray-300">
+                        Your launchpad for the future. Discover real-world
+                        problems and innovative solutions to kickstart your next
+                        successful startup.
+                    </p>
+                    <div
+                        class="w-full max-w-4xl mx-auto main-card-glow card-bg rounded-3xl p-8 md:p-12 shadow-2xl">
+                        <h2 class="text-2xl font-bold mb-6 text-white">Find Your
+                            Startup Idea</h2>
+                        <div class="relative flex items-center">
+                            <input id="idea-input" type="text"
+                                placeholder="Enter a problem area (or speak)..."
+                                class="w-full p-4 pr-12 rounded-full input-bg border border-[var(--input-border-color)] input-focus placeholder-[var(--secondary-text-color)] text-[var(--text-color)] transition-all duration-300">
+                            <button id="voice-button"
+                                class="absolute right-3 p-2 rounded-full bg-[var(--accent-1)]/20 hover:bg-[var(--accent-1)]/40 transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-[var(--accent-1)]"
+                                    viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm3 14a7 7 0 005.657-11.314A1 1 0 0115 6.646v1.408a1 1 0 01-2 0v-1.408a5 5 0 11-10 0v1.408a1 1 0 01-2 0v-1.408A7 7 0 0010 18z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <button id="generate-button"
+                            class="mt-8 w-full py-5 rounded-full gradient-button text-white font-bold text-lg shadow-lg hover:opacity-90 transition-all duration-300">
+                            Get Your Idea
+                        </button>
+                        <div id="loading-spinner-1"
+                            class="mt-8 hidden flex justify-center items-center">
+                            <div
+                                class="w-10 h-10 rounded-full border-4 border-t-4 border-[var(--secondary-text-color)] animate-spin border-t-[var(--accent-1)]"></div>
+                        </div>
+                        <div id="chat-response-1"
+                            class="response-container mt-8 text-left p-4 rounded-3xl shadow-inner border border-[var(--input-border-color)]">
+                            <p
+                                class="text-center font-semibold text-[var(--secondary-text-color)]">Your
+                                innovative idea will appear here...</p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Explore Section -->
+                <section id="explore"
+                    class="w-full max-w-5xl py-20 px-6 fade-in">
+                    <div class="card-bg rounded-3xl p-8 md:p-12 shadow-2xl">
+                        <h2
+                            class="text-4xl font-bold mb-6 text-center text-white">Explore
+                            Your Idea Further</h2>
+                        <p
+                            class="text-center text-lg text-[var(--secondary-text-color)] mb-8">
+                            Already have an idea? Use our advanced tools to
+                            develop it into a comprehensive plan.
+                        </p>
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <!-- Business Plan Section -->
+                            <div class="w-full p-6 input-bg rounded-3xl">
+                                <h3
+                                    class="text-xl font-bold mb-4 text-white text-center">✨
+                                    Generate Business Plan Outline</h3>
+                                <input id="business-plan-input" type="text"
+                                    placeholder="Describe your startup idea..."
+                                    class="w-full p-3 rounded-xl input-bg border border-[var(--input-border-color)] input-focus placeholder-[var(--secondary-text-color)] text-[var(--text-color)]">
+                                <button id="business-plan-button"
+                                    class="mt-4 w-full py-3 rounded-xl gradient-button text-white font-semibold hover:opacity-90 transition-colors duration-300">Generate
+                                    Outline</button>
+                                <div id="loading-spinner-2"
+                                    class="mt-4 hidden flex justify-center items-center">
+                                    <div
+                                        class="w-6 h-6 rounded-full border-3 border-t-3 border-[var(--secondary-text-color)] animate-spin border-t-[var(--accent-1)]"></div>
+                                </div>
+                                <div id="business-plan-response"
+                                    class="response-container mt-4 text-left text-sm card-bg p-4 rounded-xl shadow-inner border border-[var(--input-border-color)]">
+                                    <p
+                                        class="text-[var(--secondary-text-color)] text-center">The
+                                        business plan outline will appear
+                                        here.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col md:flex-row gap-8 mt-8">
+                            <!-- Image Generation Section -->
+                            <div class="w-full p-6 input-bg rounded-3xl">
+                                <h3
+                                    class="text-xl font-bold mb-4 text-white text-center">🖼️
+                                    Generate a Startup Image</h3>
+                                <input id="image-input" type="text"
+                                    placeholder="Describe the image you want to create..."
+                                    class="w-full p-3 rounded-xl input-bg border border-[var(--input-border-color)] input-focus placeholder-[var(--secondary-text-color)] text-[var(--text-color)]">
+                                <button id="image-generate-button"
+                                    class="mt-4 w-full py-3 rounded-xl gradient-button text-white font-semibold hover:opacity-90 transition-colors duration-300">Generate
+                                    Image</button>
+                                <div id="loading-spinner-4"
+                                    class="mt-4 hidden flex justify-center items-center">
+                                    <div
+                                        class="w-6 h-6 rounded-full border-3 border-t-3 border-[var(--secondary-text-color)] animate-spin border-t-[var(--accent-1)]"></div>
+                                </div>
+                                <div id="image-response"
+                                    class="response-container mt-4 text-center card-bg p-4 rounded-xl shadow-inner border border-[var(--input-border-color)]">
+                                    <img id="generated-image"
+                                        class="w-full h-auto rounded-xl mx-auto hidden"
+                                        alt="Generated image will appear here.">
+                                    <p id="image-placeholder"
+                                        class="text-[var(--secondary-text-color)] text-center">The
+                                        generated image will appear here.</p>
+                                </div>
+                            </div>
+                            <!-- Name & Tagline Section -->
+                            <div class="w-full p-6 input-bg rounded-3xl">
+                                <h3
+                                    class="text-xl font-bold mb-4 text-white text-center">✨
+                                    Brainstorm Name & Tagline</h3>
+                                <input id="tagline-input" type="text"
+                                    placeholder="Describe your startup idea..."
+                                    class="w-full p-3 rounded-xl input-bg border border-[var(--input-border-color)] input-focus placeholder-[var(--secondary-text-color)] text-[var(--text-color)]">
+                                <button id="tagline-button"
+                                    class="mt-4 w-full py-3 rounded-xl gradient-button text-white font-semibold hover:opacity-90 transition-colors duration-300">Get
+                                    Names & Taglines</button>
+                                <div id="loading-spinner-3"
+                                    class="mt-4 hidden flex justify-center items-center">
+                                    <div
+                                        class="w-6 h-6 rounded-full border-3 border-t-3 border-[var(--secondary-text-color)] animate-spin border-t-[var(--accent-1)]"></div>
+                                </div>
+                                <div id="tagline-response"
+                                    class="response-container mt-4 text-left text-sm card-bg p-4 rounded-xl shadow-inner border border-[var(--input-border-color)]">
+                                    <p
+                                        class="text-[var(--secondary-text-color)] text-center">Suggested
+                                        names and taglines will appear here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- About Section -->
+                <section id="about" class="w-full max-w-5xl py-20 px-6 fade-in">
+                    <div class="card-bg rounded-3xl p-8 md:p-12 shadow-2xl">
+                        <h2
+                            class="text-4xl font-bold mb-6 text-center text-white">About
+                            INNOV.AI</h2>
+                        <p
+                            class="text-center text-lg text-[var(--secondary-text-color)]">
+                            INNOV.AI was founded by a team of ambitious and
+                            forward-thinking individuals from DVR & DR.HS MIC
+                            COLLEGE OF TECHNOLOGY. We share an immersive
+                            interest in identifying impactful problems and
+                            providing actionable solutions for the real world.
+                            Our mission is to empower you to become a founder by
+                            giving you a head start with innovative ideas. By
+                            helping you solve these problems, we believe you can
+                            build successful startups that not only achieve your
+                            dreams but also contribute significantly to global
+                            economic growth.
+                        </p>
+                    </div>
+                </section>
+                <!-- Founders Section -->
+                <section id="founders"
+                    class="w-full max-w-6xl py-20 px-6 fade-in">
+                    <h2
+                        class="text-4xl font-bold mb-12 text-center text-white">Our
+                        Founders</h2>
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Sujith -->
+                        <div
+                            class="founder-card card-bg p-8 shadow-xl text-center flex flex-col items-center">
+                            <div class="founder-initial-shape mb-4">S.</div>
+                            <h3
+                                class="text-2xl font-bold text-white mb-2">Sujith</h3>
+                            <p
+                                class="text-md text-[var(--secondary-text-color)] italic">Visionary
+                                & Strategist</p>
+                        </div>
+                        <!-- Swarup -->
+                        <div
+                            class="founder-card card-bg p-8 shadow-xl text-center flex flex-col items-center">
+                            <div class="founder-initial-shape mb-4">S.</div>
+                            <h3
+                                class="text-2xl font-bold text-white mb-2">Swarup</h3>
+                            <p
+                                class="text-md text-[var(--secondary-text-color)] italic">AI
+                                & Product Lead</p>
+                        </div>
+                        <!-- Bhargav -->
+                        <div
+                            class="founder-card card-bg p-8 shadow-xl text-center flex flex-col items-center">
+                            <div class="founder-initial-shape mb-4">B.</div>
+                            <h3
+                                class="text-2xl font-bold text-white mb-2">Bhargav</h3>
+                            <p
+                                class="text-md text-[var(--secondary-text-color)] italic">Technology
+                                Architect</p>
+                        </div>
+                        <!-- Naseem -->
+                        <div
+                            class="founder-card card-bg p-8 shadow-xl text-center flex flex-col items-center">
+                            <div class="founder-initial-shape mb-4">N.</div>
+                            <h3
+                                class="text-2xl font-bold text-white mb-2">Naseem</h3>
+                            <p
+                                class="text-md text-[var(--secondary-text-color)] italic">User
+                                Experience Designer</p>
+                        </div>
+                    </div>
+                </section>
+                <!-- Contact Section -->
+                <section id="contact"
+                    class="w-full max-w-xl py-20 px-6 fade-in">
+                    <div class="card-bg rounded-3xl p-8 md:p-12 shadow-2xl">
+                        <h2
+                            class="text-4xl font-bold mb-6 text-center text-white">Contact
+                            Us</h2>
+                        <p
+                            class="text-center text-lg text-[var(--secondary-text-color)] mb-8">
+                            Have a question, feedback, or just want to chat
+                            about your idea? We'd love to hear from you.
+                        </p>
+                        <form id="contact-form" class="space-y-4">
+                            <div>
+                                <label for="name"
+                                    class="block text-sm font-medium text-[var(--secondary-text-color)] mb-1">Name</label>
+                                <input type="text" id="name" name="name"
+                                    class="w-full p-3 rounded-lg input-bg border border-[var(--input-border-color)] input-focus text-[var(--text-color)] placeholder-[var(--secondary-text-color)]"
+                                    placeholder="Your Name" required>
+                            </div>
+                            <div>
+                                <label for="email"
+                                    class="block text-sm font-medium text-[var(--secondary-text-color)] mb-1">Email</label>
+                                <input type="email" id="email" name="email"
+                                    class="w-full p-3 rounded-lg input-bg border border-[var(--input-border-color)] input-focus text-[var(--text-color)] placeholder-[var(--secondary-text-color)]"
+                                    placeholder="your.email@example.com"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="subject"
+                                    class="block text-sm font-medium text-[var(--secondary-text-color)] mb-1">Subject</label>
+                                <input type="text" id="subject" name="subject"
+                                    class="w-full p-3 rounded-lg input-bg border border-[var(--input-border-color)] input-focus text-[var(--text-color)] placeholder-[var(--secondary-text-color)]"
+                                    placeholder="Let us know what's on your mind"
+                                    required>
+                            </div>
+                            <div>
+                                <label for="message"
+                                    class="block text-sm font-medium text-[var(--secondary-text-color)] mb-1">Message</label>
+                                <textarea id="message" name="message" rows="4"
+                                    class="w-full p-3 rounded-lg input-bg border border-[var(--input-border-color)] input-focus text-[var(--text-color)] placeholder-[var(--secondary-text-color)]"
+                                    placeholder="Write your message here..."
+                                    required></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-3 rounded-lg gradient-button text-white font-semibold hover:opacity-90 transition-all duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            </main>
+            <!-- Footer -->
+            <footer
+                class="w-full text-center py-6 text-sm text-[var(--secondary-text-color)] border-t border-[var(--input-border-color)] mt-auto">
+                &copy; 2024 INNOV.AI. All rights reserved.
+            </footer>
+        </div>
+        <!-- Chatbot Toggle Button -->
+        <button id="chat-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
+            </svg>
+        </button>
+        <!-- Chatbot Pop-up -->
+        <div id="chat-popup" class="chat-popup">
+            <div class="chat-header">
+                <span>INNOV.AI Buddy</span>
+                <button id="close-chat"
+                    class="text-white hover:text-[var(--secondary-text-color)]">&times;</button>
+            </div>
+            <div id="chat-body" class="chat-body">
+                <div class="bot-message message">Hey there! Got a problem you
+                    need to solve? I'm here to help, or just tell you a bad
+                    joke. Your choice!</div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chat-input"
+                    placeholder="Ask me anything...">
+                <button id="send-chat-btn">Send</button>
+            </div>
+        </div>
+        <!-- Backdrop Overlay for blur effect -->
+        <div id="backdrop-overlay" class="backdrop-overlay"></div>
+        <!-- <script src="script.js"></script> -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+  const ideaInput = document.getElementById("idea-input");
+  const generateButton = document.getElementById("generate-button");
+  const responseContainer1 = document.getElementById("chat-response-1");
+  const loadingSpinner1 = document.getElementById("loading-spinner-1");
+  const voiceButton = document.getElementById("voice-button");
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    voiceButton.addEventListener("click", () => {
+      voiceButton.classList.add("animate-pulse");
+      ideaInput.placeholder = "Listening...";
+      recognition.start();
+    });
+    recognition.addEventListener("result", (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
+      ideaInput.value = transcript;
+    });
+    recognition.addEventListener("end", () => {
+      voiceButton.classList.remove("animate-pulse");
+      ideaInput.placeholder = "Enter a problem area (or speak)...";
+    });
+    recognition.addEventListener("error", (event) => {
+      console.error("Speech recognition error:", event.error);
+      voiceButton.classList.remove("animate-pulse");
+      ideaInput.placeholder = "Error, please try again.";
+    });
+  } else {
+    voiceButton.style.display = "none";
+  }
+  // Function to add a message to the chat container
+  const addMessageToChat = (sender, message) => {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("flex", "my-4", "fade-in");
+    const messageContent = document.createElement("div");
+    messageContent.classList.add("chat-message", "max-w-xs", "md:max-w-md");
+    if (sender === "user") {
+      messageDiv.classList.add("justify-end");
+      messageContent.classList.add("user-message");
+      messageContent.textContent = message;
+    } else {
+      messageDiv.classList.add("justify-start");
+      messageContent.innerHTML = formatMarkdown(message);
+    }
+    messageDiv.appendChild(messageContent);
+    responseContainer1.appendChild(messageDiv);
+    responseContainer1.scrollTop = responseContainer1.scrollHeight; // Auto-scroll to the bottom
+  };
+  // Function to format the markdown text into HTML
+  const formatMarkdown = (text) => {
+    const lines = text.split("\n");
+    let htmlContent = "";
+    let inList = false;
+    let listTag = "";
+    lines.forEach((line) => {
+      const trimmedLine = line.trim();
+      if (trimmedLine.startsWith("###")) {
+        if (inList) {
+          htmlContent += `${listTag === "ul" ? "</ul>" : "</ol>"}`;
+          inList = false;
+        }
+        htmlContent += `<h3 class="text-xl font-bold mt-4 mb-2" style="color:var(--accent-1);">${trimmedLine
+          .substring(3)
+          .trim()}</h3>`;
+      } else if (trimmedLine.match(/^\s*-\s/)) {
+        // Handles bullet points
+        if (!inList || listTag !== "ul") {
+          if (inList) htmlContent += "</ol>";
+          htmlContent += "<ul>";
+          inList = true;
+          listTag = "ul";
+        }
+        const formattedText = trimmedLine
+          .replace(/^\s*-\s/, "")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        htmlContent += `<li class="ml-4">${formattedText}</li>`;
+      } else if (trimmedLine.match(/^\s*\d+\.\s/)) {
+        // Handles numbered lists
+        if (!inList || listTag !== "ol") {
+          if (inList) htmlContent += "</ul>";
+          htmlContent += "<ol>";
+          inList = true;
+          listTag = "ol";
+        }
+        const formattedText = trimmedLine
+          .replace(/^\s*\d+\.\s/, "")
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+        htmlContent += `<li class="ml-4">${formattedText}</li>`;
+      } else if (trimmedLine !== "") {
+        if (inList) {
+          htmlContent += `${listTag === "ul" ? "</ul>" : "</ol>"}`;
+          inList = false;
+        }
+        // Basic markdown bolding and italics
+        const formattedText = trimmedLine
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\*(.*?)\*/g, "<em>$1</em>");
+        htmlContent += `<p>${formattedText}</p>`;
+      }
+    });
+    if (inList) {
+      htmlContent += `${listTag === "ul" ? "</ul>" : "</ol>"}`;
+    }
+    return htmlContent;
+  };
+  const businessPlanInput = document.getElementById("business-plan-input");
+  const businessPlanButton = document.getElementById("business-plan-button");
+  const businessPlanResponse = document.getElementById(
+    "business-plan-response"
+  );
+  const loadingSpinner2 = document.getElementById("loading-spinner-2");
+  const taglineInput = document.getElementById("tagline-input");
+  const taglineButton = document.getElementById("tagline-button");
+  const taglineResponse = document.getElementById("tagline-response");
+  const loadingSpinner3 = document.getElementById("loading-spinner-3");
+  const imageInput = document.getElementById("image-input");
+  const imageGenerateButton = document.getElementById("image-generate-button");
+  const imageResponse = document.getElementById("image-response");
+  const generatedImage = document.getElementById("generated-image");
+  const imagePlaceholder = document.getElementById("image-placeholder");
+  const loadingSpinner4 = document.getElementById("loading-spinner-4");
+  // Function to handle API calls for text generation
+  const callGeminiApi = async (
+    prompt,
+    responseContainer,
+    loadingSpinner,
+    isIdeaGenerator = false
+  ) => {
+    loadingSpinner.classList.remove("hidden");
+
+    // Add user message to chat log for the main idea generator
+    if (isIdeaGenerator) {
+      responseContainer.innerHTML =
+        '<p class="text-center font-semibold text-[var(--secondary-text-color)]">Thinking...</p>';
+      addMessageToChat("user", prompt);
+      ideaInput.value = ""; // Clear input field
+    }
+    const apiKey = "AIzaSyD62SirEsTLHpTUgeyg5pkyWuhcAV5rRLw";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+    let payload = {
+      contents: [
+        {
+          parts: [{ text: prompt }],
+        },
+      ],
+    };
+    // Add system instruction for the main idea generator
+    if (isIdeaGenerator) {
+      payload.systemInstruction = {
+        parts: [
+          {
+            text: "You are a friendly and encouraging AI named 'INNOV.AI Buddy'. Your goal is to help users find awesome, real-world startup ideas. Respond in a casual, conversational, and helpful tone. For the main idea generation, provide the startup idea and a clear, organized, numbered list of steps that a user can follow to start their business. The steps should be actionable and cover everything from validation to launch. Do not give irrelevant responses and always stay on topic.",
+          },
+        ],
+      };
+    }
+    let responseText = "";
+    let attempts = 0;
+    const maxAttempts = 3;
+    let successful = false;
+    while (attempts < maxAttempts && !successful) {
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            `API returned an error: ${response.status} - ${errorData.error.message}`
+          );
+        }
+        const result = await response.json();
+        const candidate = result.candidates?.[0];
+        if (candidate && candidate.content?.parts?.[0]?.text) {
+          responseText = candidate.content.parts[0].text;
+          successful = true;
+        } else {
+          throw new Error("No content in API response");
+        }
+      } catch (error) {
+        console.error("Error fetching API:", error);
+        attempts++;
+        if (attempts < maxAttempts) {
+          // Exponential backoff
+          await new Promise((res) => setTimeout(res, 2 ** attempts * 1000));
+        } else {
+          responseText =
+            "Apologies, it seems there's a problem connecting to the AI. Please check your internet connection and try again. If the problem persists, the service may be temporarily unavailable.";
+        }
+      }
+    }
+    loadingSpinner.classList.add("hidden");
+    if (isIdeaGenerator) {
+      responseContainer.innerHTML = ""; // Clear chat panel
+      addMessageToChat("ai", responseText);
+    } else {
+      responseContainer.innerHTML = formatMarkdown(responseText);
+      responseContainer.classList.add("fade-in");
+    }
+  };
+  // Function to handle API calls for image generation
+  const callImageApi = async (prompt, responseContainer, loadingSpinner) => {
+    loadingSpinner.classList.remove("hidden");
+    generatedImage.classList.add("hidden");
+    imagePlaceholder.classList.remove("hidden");
+    const payload = {
+      instances: { prompt: prompt },
+      parameters: { sampleCount: 1 },
+    };
+    const apiKey = "AIzaSyD62SirEsTLHpTUgeyg5pkyWuhcAV5rRLw";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      const base64Data = result?.predictions?.[0]?.bytesBase64Encoded;
+      if (base64Data) {
+        const imageUrl = `data:image/png;base64,${base64Data}`;
+        generatedImage.src = imageUrl;
+        generatedImage.classList.remove("hidden");
+        imagePlaceholder.classList.add("hidden");
+      } else {
+        imagePlaceholder.textContent =
+          "Sorry, I couldn't generate an image. Please try again.";
+        imagePlaceholder.classList.remove("hidden");
+      }
+    } catch (error) {
+      console.error("Error fetching image API:", error);
+      imagePlaceholder.textContent =
+        "An error occurred while generating the image. Please try again later.";
+      imagePlaceholder.classList.remove("hidden");
+    } finally {
+      loadingSpinner.classList.add("hidden");
+    }
+  };
+  // Event listener for the "Get Your Idea" button
+  generateButton.addEventListener("click", () => {
+    const userPrompt = ideaInput.value.trim();
+    if (userPrompt) {
+      callGeminiApi(userPrompt, responseContainer1, loadingSpinner1, true);
+    }
+  });
+  // Event listener for "Enter" key on the main input field
+  ideaInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent default behavior (e.g., new line)
+      generateButton.click(); // Trigger the button's click event
+    }
+  });
+  // Event listener for the "Generate Outline" button
+  businessPlanButton.addEventListener("click", () => {
+    const userPrompt = businessPlanInput.value.trim();
+    if (userPrompt) {
+      const fullPrompt = `Generate a comprehensive business plan outline for a startup based on the following idea: "${userPrompt}". Include sections for:
+            - Executive Summary
+            - Problem and Solution
+            - Target Market Analysis
+            - Competitive Analysis
+            - Marketing and Sales Strategy
+            - Operations Plan
+            - Financial Projections (conceptual)
+            - Team and Management
+            - Appendix
+            Make the outline detailed with bullet points under each section.`;
+      callGeminiApi(fullPrompt, businessPlanResponse, loadingSpinner2);
+    } else {
+      businessPlanResponse.innerHTML =
+        '<p class="text-[var(--secondary-text-color)] text-center">Please enter a startup idea to generate an outline.</p>';
+    }
+  });
+  // Event listener for the "Get Names & Taglines" button
+  taglineButton.addEventListener("click", () => {
+    const userPrompt = taglineInput.value.trim();
+    if (userPrompt) {
+      const fullPrompt = `Suggest 5 unique and catchy names and 5 corresponding taglines for a startup based on this idea: "${userPrompt}". Present the output with "### Names" and "### Taglines" headings.`;
+      callGeminiApi(fullPrompt, taglineResponse, loadingSpinner3);
+    } else {
+      taglineResponse.innerHTML =
+        '<p class="text-[var(--secondary-text-color)] text-center">Please enter a startup idea to get name and tagline suggestions.</p>';
+    }
+  });
+  // Event listener for the "Generate Image" button
+  imageGenerateButton.addEventListener("click", () => {
+    const userPrompt = imageInput.value.trim();
+    if (userPrompt) {
+      callImageApi(userPrompt, imageResponse, loadingSpinner4);
+    } else {
+      imagePlaceholder.textContent =
+        "Please enter a description to generate an image.";
+      imagePlaceholder.classList.remove("hidden");
+    }
+  });
+  // Event listener for the contact form submission
+  const contactForm = document.getElementById("contact-form");
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
+    const mailtoLink = `mailto:sujith20042004@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(
+      "Name: " + name + "\nEmail: " + email + "\n\n" + message
+    )}`;
+    window.location.href = mailtoLink;
+  });
+  // Parallax effect for floating shapes
+  const shapes = document.querySelectorAll(".parallax-bg");
+  document.addEventListener("mousemove", (e) => {
+    const x = (window.innerWidth - e.pageX * 2) / 100;
+    const y = (window.innerHeight - e.pageY * 2) / 100;
+    shapes.forEach((shape) => {
+      const depth = shape.getAttribute("data-depth");
+      const moveX = x * depth;
+      const moveY = y * depth;
+      shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+  });
+  // Chatbot functionality
+  const chatToggle = document.getElementById("chat-toggle");
+  const chatPopup = document.getElementById("chat-popup");
+  const chatBody = document.getElementById("chat-body");
+  const chatInput = document.getElementById("chat-input");
+  const sendChatBtn = document.getElementById("send-chat-btn");
+  const closeChatBtn = document.getElementById("close-chat");
+  const backdropOverlay = document.getElementById("backdrop-overlay");
+
+  chatToggle.addEventListener("click", () => {
+    chatPopup.classList.toggle("open");
+    backdropOverlay.classList.toggle("open");
+  });
+  closeChatBtn.addEventListener("click", () => {
+    chatPopup.classList.remove("open");
+    backdropOverlay.classList.remove("open");
+  });
+  backdropOverlay.addEventListener("click", () => {
+    chatPopup.classList.remove("open");
+    backdropOverlay.classList.remove("open");
+  });
+
+  // Function to add a message to the chat container
+  const addChatbotMessage = (message, sender = "bot") => {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    if (sender === "user") {
+      messageDiv.classList.add("user-message");
+    } else {
+      messageDiv.classList.add("bot-message");
+    }
+    messageDiv.textContent = message;
+    chatBody.appendChild(messageDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+  };
+
+  // New function to handle the API call for the chatbot
+  const callChatbotApi = async (prompt) => {
+    const tempMessage = "Thinking...";
+    const loadingMessageDiv = document.createElement("div");
+    loadingMessageDiv.classList.add("message", "bot-message");
+    loadingMessageDiv.textContent = tempMessage;
+    chatBody.appendChild(loadingMessageDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    const apiKey = "AIzaSyD62SirEsTLHpTUgeyg5pkyWuhcAV5rRLw";
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+    const payload = {
+      contents: [
+        {
+          parts: [{ text: prompt }],
+        },
+      ],
+      tools: [{ google_search: {} }],
+      systemInstruction: {
+        parts: [
+          {
+            text: "You are a friendly, humorous, and entertaining AI named 'INNOV.AI Buddy'. Your goal is to have funny, light-hearted conversations with the user. You can also answer general questions, but always maintain a casual and funny tone.",
+          },
+        ],
+      },
+    };
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+      const responseText =
+        result.candidates?.[0]?.content?.parts?.[0]?.text ||
+        "Sorry, I couldn't get a response. Maybe the punchline got lost in the cloud... Try asking again!";
+
+      loadingMessageDiv.textContent = responseText;
+      chatBody.scrollTop = chatBody.scrollHeight;
+    } catch (error) {
+      console.error("Error fetching chatbot API:", error);
+      loadingMessageDiv.textContent =
+        "Apologies, it seems there's a problem connecting. My jokes must be too powerful for the servers. Please try again.";
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+  };
+
+  // Event listener for the chatbot's send button
+  sendChatBtn.addEventListener("click", () => {
+    const userMessage = chatInput.value.trim();
+    if (userMessage) {
+      addChatbotMessage(userMessage, "user");
+      chatInput.value = "";
+      callChatbotApi(userMessage);
+    }
+  });
+  chatInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      sendChatBtn.click();
+    }
+  });
+
+  // Dynamic Theme Changer
+  const themes = [
+    {
+      bg: "#0F172A",
+      cardBg: "#1E293B",
+      mainBgGradStart: "#1E293B",
+      mainBgGradEnd: "#0F172A",
+      accent1: "#06B6D4",
+      accent2: "#38BDF8",
+      glow: "#38BDF8",
+      glowLight: "#52a7ec",
+      button: "#9333ea",
+      buttonHover: "#a855f7",
+    },
+    {
+      bg: "#1A2E2A",
+      cardBg: "#213B36",
+      mainBgGradStart: "#213B36",
+      mainBgGradEnd: "#1A2E2A",
+      accent1: "#34D399",
+      accent2: "#10B981",
+      glow: "#34D399",
+      glowLight: "#5eead4",
+      button: "#EC4899",
+      buttonHover: "#F472B6",
+    },
+    {
+      bg: "#261E16",
+      cardBg: "#3B2F21",
+      mainBgGradStart: "#3B2F21",
+      mainBgGradEnd: "#261E16",
+      accent1: "#D97706",
+      accent2: "#F59E0B",
+      glow: "#F59E0B",
+      glowLight: "#fbbf24",
+      button: "#9333ea",
+      buttonHover: "#a855f7",
+    },
+  ];
+  let currentThemeIndex = 0;
+  const themeToggleButton = document.getElementById("theme-toggle");
+  const root = document.documentElement;
+
+  const updateTheme = (theme) => {
+    root.style.setProperty("--bg-color", theme.bg);
+    root.style.setProperty("--card-bg-color", theme.cardBg);
+    root.style.setProperty("--main-bg-gradient-start", theme.mainBgGradStart);
+    root.style.setProperty("--main-bg-gradient-end", theme.mainBgGradEnd);
+    root.style.setProperty("--accent-1", theme.accent1);
+    root.style.setProperty("--accent-2", theme.accent2);
+    root.style.setProperty("--button-color", theme.button);
+    root.style.setProperty("--button-hover", theme.buttonHover);
+    root.style.setProperty("--glow-color", theme.glow);
+    root.style.setProperty("--glow-color-light", theme.glowLight);
+
+    // Update RGB values for transparency
+    const hexToRgb = (hex) => {
+      let r = 0,
+        g = 0,
+        b = 0;
+      if (hex.length === 4) {
+        r = parseInt(hex[1] + hex[1], 16);
+        g = parseInt(hex[2] + hex[2], 16);
+        b = parseInt(hex[3] + hex[3], 16);
+      } else if (hex.length === 7) {
+        r = parseInt(hex.substring(1, 3), 16);
+        g = parseInt(hex.substring(3, 5), 16);
+        b = parseInt(hex.substring(5, 7), 16);
+      }
+      return `${r}, ${g}, ${b}`;
+    };
+    root.style.setProperty("--accent-1-rgb", hexToRgb(theme.accent1));
+    root.style.setProperty("--accent-2-rgb", hexToRgb(theme.accent2));
+    root.style.setProperty("--glow-color-rgb", hexToRgb(theme.glow));
+  };
+
+  themeToggleButton.addEventListener("click", () => {
+    currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+    updateTheme(themes[currentThemeIndex]);
+  });
+
+  // Set initial theme
+  updateTheme(themes[currentThemeIndex]);
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileLinks = mobileMenu.querySelectorAll("a");
+
+  menuToggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+    backdropOverlay.classList.toggle("open");
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.remove("open");
+      backdropOverlay.classList.remove("open");
+    });
+  });
+
+  // Close mobile menu when clicking on backdrop
+  backdropOverlay.addEventListener("click", () => {
+    mobileMenu.classList.remove("open");
+    backdropOverlay.classList.remove("open");
+  });
+});
+
+         </script>
+    </body>
+</html>
